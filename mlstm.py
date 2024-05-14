@@ -48,8 +48,8 @@ class mLSTM(nn.Module):
         #normalizer state 20번
         
         #21번 과정 #hidden state 
-        max_nqt = torch.max(torch.abs(torch.matmul(n.T, qt)), torch.tensor(1.0))
-        h_wave = torch.matmul(C, qt) / max_nqt  
+        max_nqt = torch.max(torch.abs(torch.matmul(n.T, q_t)), torch.tensor(1.0))
+        h_wave = torch.matmul(C, q_t) / max_nqt  
         o_t = torch.sigmoid(torch.matmul(self.W_o, x) + self.b_o)
         #ot = output gate
         h_t = o_t * h_wave #
