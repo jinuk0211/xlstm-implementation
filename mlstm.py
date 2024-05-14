@@ -6,18 +6,18 @@ class mLSTM(nn.Module):
         self.input_size = input_size
         self.hidden_size = hidden_size
         self.memory_dim = memory_dim
-        self.Wq = nn.Parameter(torch.randn(hidden_size, input_size))
-        self.bq = nn.Parameter(torch.randn(hidden_size, 1))
-        self.Wk = nn.Parameter(torch.randn(memory_dim, input_size))
-        self.bk = nn.Parameter(torch.randn(memory_dim, 1))
-        self.Wv = nn.Parameter(torch.randn(memory_dim, input_size))
-        self.bv = nn.Parameter(torch.randn(memory_dim, 1))
-        self.wi = nn.Parameter(torch.randn(1, input_size))
-        self.bi = nn.Parameter(torch.randn(1))
-        self.wf = nn.Parameter(torch.randn(1, input_size))
-        self.bf = nn.Parameter(torch.randn(1))
-        self.Wo = nn.Parameter(torch.randn(hidden_size, input_size))
-        self.bo = nn.Parameter(torch.randn(hidden_size, 1))
+        self.W_q = nn.Parameter(torch.randn(hidden_size, input_size))
+        self.b_q = nn.Parameter(torch.randn(hidden_size, 1))
+        self.W_k = nn.Parameter(torch.randn(memory_dim, input_size))
+        self.b_k = nn.Parameter(torch.randn(memory_dim, 1))
+        self.W_v = nn.Parameter(torch.randn(memory_dim, input_size))
+        self.b_v = nn.Parameter(torch.randn(memory_dim, 1))
+        self.w_i = nn.Parameter(torch.randn(1, input_size))
+        self.b_i = nn.Parameter(torch.randn(1))
+        self.w_f = nn.Parameter(torch.randn(1, input_size))
+        self.b_f = nn.Parameter(torch.randn(1))
+        self.W_o = nn.Parameter(torch.randn(hidden_size, input_size))
+        self.b_o = nn.Parameter(torch.randn(hidden_size, 1))
         self.reset_parameters()
 
     def reset_parameters(self):
@@ -29,22 +29,22 @@ class mLSTM(nn.Module):
 
     def forward(self, x, states):
         (C_prev, n_prev) = states
-        qt = torch.matmul(self.Wq, x) + self.bq # query input 22번
-        kt = (1 / math.sqrt(self.memory_dim)) * (torch.matmul(self.Wk, x) + self.bk)
+        q_t = torch.matmul(self.W_q, x) + self.bq # query input 22번
+        k_t = (1 / math.sqrt(self.memory_dim)) * (torch.matmul(self.W_k, x) + self.b_k)
         #key input 23번
-        vt = torch.matmul(self.Wv, x) + self.bv
+        v_t = torch.matmul(self.W_v, x) + self.b_v
         #value input 24번
 
-        it = torch.exp(torch.matmul(self.wi, x) + self.bi)
+        i_t = torch.exp(torch.matmul(self.w_i, x) + self.b_i)
         #input gate 25번
-        ft = torch.sigmoid(torch.matmul(self.wf, x) + self.bf)
+        f_t = torch.sigmoid(torch.matmul(self.w_f, x) + self.b_f)
         #forget gate 26번
-        vt = vt.squeeze() #C(T) = C(T-1) + vt
-        kt = kt.squeeze()
+        v_t = v_t.squeeze() #C(T) = C(T-1) + vt
+        k_t = k_t.squeeze()
 
-        C = ft * C_prev + it * torch.ger(vt, kt) #외적곱
+        C = f_t * C_prev + i_t * torch.ger(v_t, k_t) #외적곱
         #cell state 19번
-        n = ft * n_prev + it * kt.unsqueeze(1)
+        n = f_t * n_prev + i_t * k_t.unsqueeze(1)
         #normalizer state 20번
         
         #21번 과정 #hidden state 
