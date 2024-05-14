@@ -15,7 +15,7 @@ scalar memory,  scalar update, and memory mixing,
 mLSTM
 matrix memory, covariance (outer product) update rule(완전히 병렬가능) 
 
-![image](https://github.com/jinuk0211/xlstm-implementation/assets/150532431/eaaa5791-9d6f-4fa1-9d8b-c43625dbd605)
+![image](https://github.com/jinuk0211/xlstm-implementation/assets/150532431/276196b3-9544-4715-b584-b7513f246564)
 
 ![image](https://github.com/jinuk0211/xlstm-implementation/assets/150532431/823da186-ba03-46ac-9610-f6f5f788f522)
 
