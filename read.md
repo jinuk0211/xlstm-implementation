@@ -15,7 +15,7 @@ scalar memory,  scalar update, and memory mixing,
 mLSTM
 matrix memory, covariance (outer product) update rule(완전히 병렬가능) 
 
-![image](https://github.com/jinuk0211/xlstm-implementation/assets/150532431/e6a61fb0-e689-48c4-b201-8053f4231c57)
+![image](https://github.com/jinuk0211/xlstm-implementation/assets/150532431/823da186-ba03-46ac-9610-f6f5f788f522)
 
 관련 연구
 Linear Attention
