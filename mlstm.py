@@ -50,8 +50,8 @@ class mLSTM(nn.Module):
         #21번 과정 #hidden state 
         max_nqt = torch.max(torch.abs(torch.matmul(n.T, qt)), torch.tensor(1.0))
         h_wave = torch.matmul(C, qt) / max_nqt  
-        ot = torch.sigmoid(torch.matmul(self.Wo, x) + self.bo)
+        o_t = torch.sigmoid(torch.matmul(self.W_o, x) + self.b_o)
         #ot = output gate
-        ht = ot * h_wave #
+        h_t = o_t * h_wave #
 
-        return ht, (C, n)
+        return h_t, (C, n)
